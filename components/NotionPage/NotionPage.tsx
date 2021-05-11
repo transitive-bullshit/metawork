@@ -10,7 +10,7 @@ import styles from './styles.module.css'
 
 export function NotionPage({ recordMap }: { recordMap: ExtendedRecordMap }) {
   return (
-    <Layout full>
+    <Layout>
       <section className={styles.notionSection}>
         <NotionRenderer
           recordMap={recordMap}
