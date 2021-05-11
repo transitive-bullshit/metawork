@@ -25,9 +25,6 @@ export const fathomConfig = fathomId
 
 export const imageCDNHost = 'https://ssfy.io'
 
-export const signupLink =
-  'https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fpublish.twitter.com%2F&ref_src=twsrc%5Etfw&screen_name=ondeckglobe&text=%23MakeMePublic%20ondeckglobe.com&tw_p=tweetbutton'
-
 // ----------------------------------------------------------------------------
 
 export function getEnv(
@@ -56,11 +53,6 @@ export const googleProjectId = getEnv(
 )
 
 export const googleApplicationCredentials = getGoogleApplicationCredentials()
-
-export const firebaseCollectionUsers = getEnv(
-  'FIREBASE_COLLECTION_USERS',
-  defaultEnvValueForGoogle
-)
 
 // this hack is necessary because vercel doesn't support secret files so we need to encode our google
 // credentials a base64-encoded string of the JSON-ified content
