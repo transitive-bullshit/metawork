@@ -2,7 +2,7 @@ export const isServer = typeof window === 'undefined'
 export const isDev =
   process.env.NODE_ENV === 'development' || !process.env.NODE_ENV
 
-export const domain = getEnv('DOMAIN', 'ondeckglobe.com')
+export const domain = getEnv('DOMAIN', 'metaworklabs.com')
 export const port = getEnv('PORT', '3000')
 export const host = isDev ? `http://localhost:${port}` : `https://${domain}`
 
