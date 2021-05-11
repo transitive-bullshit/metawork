@@ -1,0 +1,15 @@
+.body {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Mobile viewport optimizations */
+  min-height: 100%;
+}
+
+.main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
