@@ -14,7 +14,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "vercel --prod",
     "analyze": "cross-env ANALYZE=true next build",
     "test": "run-s test:*",
     "test:lint": "eslint .",

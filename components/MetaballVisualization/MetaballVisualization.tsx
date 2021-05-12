@@ -12,10 +12,8 @@ export const MetaballVisualization: React.FC = () => {
 
   const defaultWidth = typeof window !== 'undefined' ? window.innerWidth : 1280
   const defaultHeight = typeof window !== 'undefined' ? window.innerHeight : 720
-  const [
-    measureRef,
-    { width = defaultWidth, height = defaultHeight }
-  ] = useMeasure()
+  const [measureRef, { width = defaultWidth, height = defaultHeight }] =
+    useMeasure()
 
   React.useEffect(() => {
     const metaballViz = new MetaballViz({
