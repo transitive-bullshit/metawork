@@ -22,6 +22,12 @@ export default function HomePage() {
             <h1 className={styles.title}>Metawork</h1>
           </div>
         </div>
+
+        <div className={styles.section}>
+          <div className={styles.hero}>
+            <h1 className={styles.title}>TEST</h1>
+          </div>
+        </div>
       </Layout>
     </Metaballs.Provider>
   )

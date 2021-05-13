@@ -21,6 +21,7 @@ export class MetaballViz {
   _scene: Scene
   _camera: OrthographicCamera
   _material: ShaderMaterial
+  _mesh: Mesh
 
   _metaballs: Body[]
   _metaballsData: Float32Array
@@ -58,17 +59,19 @@ export class MetaballViz {
     const vertexShader = `
 void main() {
   gl_Position = vec4(position, 1.0);
+  // gl_Position = projectionMatrix * modelViewMatrix * vec4(position.xyz, 1.0);
 }
 `
 
     const fragmentShader = `
 uniform vec2 screen;
+uniform vec2 offset;
 // uniform vec2 mouse;
 uniform vec3 metaballs[${numMetaballs}];
 
 void main(){
-  float x = gl_FragCoord.x;
-  float y = gl_FragCoord.y;
+  float x = gl_FragCoord.x + offset.x;
+  float y = gl_FragCoord.y + offset.y;
 
   float sum = 0.0;
   for (int i = 0; i < ${numMetaballs}; i++) {
@@ -108,6 +111,9 @@ void main(){
         screen: {
           value: new Vector2(width, height)
         },
+        offset: {
+          value: new Vector2(0, 0)
+        },
         // mouse: {
         //   value: new Vector2(0, 0)
         // },
@@ -121,6 +127,7 @@ void main(){
     })
 
     const mesh = new Mesh(geometry, this._material)
+    this._mesh = mesh
     this._scene.add(mesh)
   }
 
@@ -188,13 +195,32 @@ void main(){
     this._rafHandle = requestAnimationFrame(this.animate.bind(this))
   }
 
-  onResize = () => {
+  resize() {
     const { width, height } = this._canvas
 
     this._resetMetaballs()
 
     this._renderer.setSize(width, height)
     this._material.uniforms.screen.value = new Vector2(width, height)
+  }
+
+  scroll(x: number, y: number) {
+    // TODO: draw this out
+
+    // const offsetY = -this._canvas.height / 4
+    // const section = Math.max(0, Math.floor((y + offsetY) / this._canvas.height))
+
+    const offset = -(y % this._canvas.height)
+    if (!isNaN(offset)) {
+      this._material.uniforms.offset.value = new Vector2(0, offset)
+    }
+
+    // const offset = -(2 * (y % this._canvas.height)) / this._canvas.height
+    // console.log(offset)
+
+    // this._camera = new OrthographicCamera(-1, 1, 1 + offset, -1 + offset, 0, 1)
+    // this._mesh.position.setZ(-y)
+    // this._mesh.updateMatrix()
   }
 
   update() {
@@ -256,6 +282,7 @@ void main(){
       if (metaball.x < metaball.r) {
         metaball.dx = Math.abs(metaball.dx)
       }
+
       if (metaball.x > width - metaball.r) {
         metaball.dx = -Math.abs(metaball.dx)
       }
@@ -323,7 +350,7 @@ void main(){
 
   render() {
     this._material.uniforms.metaballs.value = this._metaballsData
-    this._material.uniformsNeedUpdate = true
+    // this._material.uniformsNeedUpdate = true
 
     this._renderer.render(this._scene, this._camera)
   }

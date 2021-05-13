@@ -1,5 +1,5 @@
 import React from 'react'
-import { useMeasure } from 'react-use'
+import { useMeasure, useWindowScroll } from 'react-use'
 
 import { Metaballs } from 'state/metaballs'
 
@@ -14,6 +14,7 @@ export const MetaballVisualization: React.FC = () => {
   const defaultHeight = typeof window !== 'undefined' ? window.innerHeight : 720
   const [measureRef, { width = defaultWidth, height = defaultHeight }] =
     useMeasure()
+  const { x, y } = useWindowScroll()
 
   React.useEffect(() => {
     const metaballViz = new MetaballViz({
@@ -26,8 +27,12 @@ export const MetaballVisualization: React.FC = () => {
   }, [canvasRef, metaballVizRef])
 
   React.useEffect(() => {
-    metaballVizRef?.current.onResize()
+    metaballVizRef?.current.resize()
   }, [width, height, metaballVizRef])
+
+  React.useEffect(() => {
+    metaballVizRef?.current.scroll(x, y)
+  }, [x, y, metaballVizRef])
 
   const onMouseMove = React.useCallback(
     (event) => {
