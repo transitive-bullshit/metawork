@@ -1,9 +1,3 @@
-// core styles shared by all of react-notion-x (required)
-import 'react-notion-x/src/styles.css'
-
-// core styles for static tweet renderer (optional)
-import 'react-static-tweets/styles.css'
-
 // global styles shared across the entire site
 import 'styles/global.css'
 
